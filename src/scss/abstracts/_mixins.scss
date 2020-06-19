@@ -1,0 +1,36 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+@import "../abstracts/variables";
+
+//
+// Media query mixin
+// Author: Hugo Giraudel (https://twitter.com/HugoGiraudel)
+// Article: https://www.sitepoint.com/sass-mixin-media-merging/
+// Usage: @include respond-to('sm')
+//
+
+@mixin respond-to($breakpoint) {
+  // Get the query map for $breakpoints map
+  $queries: map-get($breakpoints, $breakpoint);
+
+  // If there is no query called $breakpoint in map, throw an error
+  @if not $queries {
+    @error "No value could be retrieved from `#{$breakpoint}`. "
+    + "Please make sure it is defined in `$breakpoints` map.";
+  }
+
+  // Include the media mixin with $queries
+  @include media($queries) {
+    @content;
+  }
+}
+
+@mixin truncate($truncation-boundary) {
+  max-width: $truncation-boundary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
